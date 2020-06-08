@@ -62,6 +62,11 @@ for url_Number in range(1, 11):
                         if News_Limit == 20:
                             raise AttributeError
                         sql_url = 'https://xtech.nikkei.com' + el3.find('a').get('href')
+                        
+                        cur.execute("select * from news_db where url=%s", (sql_url, ))
+                        if cur.rowcount != 0:
+                            print('skip')
+                            continue
 
                         driver_main_search.get(sql_url)
                         
@@ -81,6 +86,8 @@ for url_Number in range(1, 11):
                         print('datetime=', sql_day)
                         print()
                         
+                        cur.execute("insert into news_db(title, url, posttime, itnewssite) values(%s, %s, %s, %s)", (sql_title, sql_url, sql_day, sql_website))
+                        conn.commit()
                         time.sleep(15)
 
                         
@@ -90,4 +97,7 @@ for url_Number in range(1, 11):
                         time.sleep(15)
                         break
                 News_count += 1
-                    
+
+cur.close()
+conn.commit()
+conn.close()                  
