@@ -11,6 +11,12 @@ import time
 
 import re
 
+import datetime
+
+dt_now = datetime.datetime.now()
+CurrentTime = int(dt_now.strftime('%y%m%d%H%M%S'))
+LimitTime = (CurrentTime // (10 ** 8) - 1) * (10 ** 8)
+
 conn = mysql.connector.connect(user = 'root', password = 'uinndouzu7', host = 'localhost', database = 'systemengine_pre')
 cur = conn.cursor(buffered=True)
 
@@ -34,7 +40,7 @@ count = 0
 sql_website = 'NikkeiXTech'
 
 
-for url_Number in range(1, 11):
+for url_Number in range(1, 50):
     driver.get(URL_base + str(url_Number))
     
     WebDriverWait(driver, 30).until(
@@ -88,6 +94,12 @@ for url_Number in range(1, 11):
                         
                         cur.execute("insert into news_db(title, url, posttime, itnewssite) values(%s, %s, %s, %s)", (sql_title, sql_url, sql_day, sql_website))
                         conn.commit()
+                        
+                        sql_day_int = int(sql_day)
+                        if sql_day_int < LimitTime:
+                            print('Time Limit Thank you, End.')
+                            count = -1
+                            break
                         time.sleep(15)
 
                         
@@ -97,6 +109,11 @@ for url_Number in range(1, 11):
                         time.sleep(15)
                         break
                 News_count += 1
+                
+                if count == -1:
+                    break
+        if count == -1:
+            break
 
 cur.close()
 conn.commit()

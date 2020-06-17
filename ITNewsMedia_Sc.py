@@ -86,7 +86,6 @@ for TwoRoup in range(2):
             CurrentTime -= 1
             if CurrentTime % 100 == 0:
                 CurrentTime -= 88
-            time.sleep(15)
 """
 for el1 in soup.select('.colBoxBacknumber'):
     for el2 in el1.select('li'):
