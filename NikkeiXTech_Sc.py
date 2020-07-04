@@ -13,11 +13,19 @@ import re
 
 import datetime
 
+import sys
+
 dt_now = datetime.datetime.now()
 CurrentTime = int(dt_now.strftime('%y%m%d%H%M%S'))
 LimitTime = (CurrentTime // (10 ** 8) - 1) * (10 ** 8)
 
-conn = mysql.connector.connect(user = 'root', password = 'uinndouzu7', host = 'localhost', database = 'systemengine_pre')
+try:
+    #sqlpassword please
+    SQLPass = ''
+    conn = mysql.connector.connect(user = 'root', password = SQLPass, host = 'localhost', database = 'systemengine_pre')
+except Exception:
+    print('PassWord is incorrect.This App is Exit.')
+    sys.exit()
 cur = conn.cursor(buffered=True)
 
 #ここからスクレイピング
@@ -115,6 +123,11 @@ for url_Number in range(1, 50):
         if count == -1:
             break
 
+cur.execute("SET @i := 0")
+cur.execute("UPDATE news_db SET sort_id = (@i := @i +1) ORDER BY posttime DESC");
+
+driver.quit()
+driver_main_search.quit()
 cur.close()
 conn.commit()
 conn.close()                  

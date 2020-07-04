@@ -10,3 +10,5 @@
 [0611/033755.347:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
 [0611/034100.837:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
 [0611/034104.003:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0704/210246.588:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
+[0704/210250.284:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
